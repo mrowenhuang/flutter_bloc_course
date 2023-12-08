@@ -24,6 +24,7 @@ class MyHomePage extends StatelessWidget {
             SizedBox(
               width: 150,
               child: Center(
+                // @ blocListener di gunakan untuk mendengar apa yang terjadi lalu memberikan efek 
                 child: BlocListener<counter, int>(
                   bloc: myCounter,
                   listener: (context, state) {
@@ -34,6 +35,7 @@ class MyHomePage extends StatelessWidget {
                       ),
                     );
                   },
+                  // @ lisenWhen dia akan mengembalikan true jika suatu kondisi terpenuhi dan menampilkan hasil dari listener
                   listenWhen: (previous, current) {
                     if (current >= 5) {
                       return true;
@@ -41,6 +43,7 @@ class MyHomePage extends StatelessWidget {
                       return false;
                     }
                   },
+                  // @ pada bagian child nya kita masukan blocbuilder untuk menjadi tampilannya
                   child: BlocBuilder<counter, int>(
                     bloc: myCounter,
                     // buildWhen: (previous, current) {
