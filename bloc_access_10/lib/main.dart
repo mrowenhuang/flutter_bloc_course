@@ -1,6 +1,3 @@
-import 'package:bloc_access_10/bloc/counter.dart';
-import 'package:bloc_access_10/page/home_page.dart';
-import 'package:bloc_access_10/page/second_page.dart';
 import 'package:bloc_access_10/routes/routes.dart';
 import 'package:flutter/material.dart';
 

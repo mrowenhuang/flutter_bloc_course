@@ -1,5 +1,4 @@
 import 'package:bloc_access_10/bloc/counter.dart';
-import 'package:bloc_access_10/page/second_page.dart';
 import 'package:bloc_access_10/widget/ValueWidget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
