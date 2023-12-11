@@ -1,5 +1,9 @@
-import 'package:bloc_extension_method/page/home_page.dart';
+import 'package:bloc_extension_method/bloc/counter.dart';
+import 'package:bloc_extension_method/bloc/profile.dart';
+import 'package:bloc_extension_method/bloc/theme.dart';
+import 'package:bloc_extension_method/widget/app.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,13 +18,16 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => SubjectBloc(),
+          create: (context) => theme(),
         ),
         BlocProvider(
-          create: (context) => SubjectBloc(),
+          create: (context) => counter(),
+        ),
+        BlocProvider(
+          create: (context) => profile(),
         ),
       ],
-      child: Container(),
-    )
+      child: app(),
+    );
   }
 }

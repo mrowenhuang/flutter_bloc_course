@@ -1,4 +1,3 @@
-
 import 'package:bloc_extension_method/bloc/counter.dart';
 import 'package:bloc_extension_method/bloc/profile.dart';
 import 'package:bloc_extension_method/bloc/theme.dart';
@@ -11,10 +10,16 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var myCounter = BlocProvider.of<counter>(context);
+    // @ penggunaan read untuk membaca data sebanyak 1x dan data akan di baca jika di hot reload
     var myTheme = context.read<theme>();
-    var myProfile = context.read<profile>();
+    // @ select sama dengan watch namun select di gunakan untuk data yang lebih spedifik seperti maping 
+    // ^ int age = context.select<profile, int>((bloc) => bloc.state['age']);
+    // @ watch di gunakan untuk memantau data yang di tuju terus menerus
+    // ^ var age = context.watch<profile>();
 
+    // @ select dan watch merupakan data yang bila ingin di gunakan harus menggunakan builder bila tidak menggunakan builder pada saat ada perubahan seluruh data akan di ulang 
+
+    print("rebuild");
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -63,53 +68,35 @@ class MyHomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            BlocSelector<profile, Map<String, dynamic>, int>(
-              bloc: myProfile,
-              selector: (state) {
-                return state['age'];
-              },
-              builder: (context, state) {
-                print('age');
-                return Text(
-                  "age = ${state}",
-                  style: Theme.of(context).textTheme.headlineLarge,
-                );
-              },
-            ),
+            // @ builder di gunakan untuk mengurung data agar bagian yang terjadi perubahan merupakan data yang ada di dalam builder
+            Builder(builder: (context) {
+              var age = context.watch<profile>();
+
+              return Text(
+                age.state['age'].toString(),
+                style: Theme.of(context).textTheme.headline2,
+              );
+            }),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 IconButton(
                   onPressed: () {
-                    myProfile.onChangeInt(myProfile.state['age'] - 1);
+                    context
+                        .read<profile>()
+                        .onChangeInt(context.read<profile>().state['age'] - 1);
                   },
                   icon: Icon(Icons.remove),
                 ),
                 IconButton(
                   onPressed: () {
-                    myProfile.onChangeInt(myProfile.state['age'] + 1);
+                    context
+                        .read<profile>()
+                        .onChangeInt(context.read<profile>().state['age'] + 1);
                   },
                   icon: Icon(Icons.add),
                 ),
               ],
-            ),
-            BlocSelector<profile, Map<String,dynamic>, String>(
-            
-              selector: (state) {
-                return state['name'];
-              },
-              builder: (context, state) {
-                print('name');
-                return Text(
-                  "name = $state",
-                  style: Theme.of(context).textTheme.headline5,
-                );
-              },
-            ),
-            TextField(
-              onChanged: (value) {
-                return myProfile.onChangeName(value);
-              },
             )
           ],
         ),
